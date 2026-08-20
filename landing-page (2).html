@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dispatch — Get Matched With a Local Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #131F38;
+    --navy-line: #2C4570;
+    --navy-line-soft: #3C5686;
+    --paper: #F2EFE6;
+    --paper-dim: #E7E2D3;
+    --ink: #1B1A17;
+    --ink-soft: #4A483F;
+    --brass: #C98A3E;
+    --brass-dark: #A96F2C;
+    --stamp-red: #B23A2E;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--navy-deep);
+    background-image:
+      linear-gradient(var(--navy-line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--navy-line-soft) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: -1px -1px;
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- HEADER ---------- */
+  header.wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .brand {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand-mark {
+    width: 12px;
+    height: 12px;
+    background: var(--brass);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  nav a {
+    text-decoration: none;
+    font-size: 0.85rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.03em;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 40px 0 90px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.3rem, 4.6vw, 3.4rem);
+    line-height: 1.05;
+    margin: 0 0 22px;
+    letter-spacing: -0.01em;
+  }
+
+  h1 span { color: var(--brass); }
+
+  .hero p.lead {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--paper-dim);
+    max-width: 46ch;
+    margin: 0 0 30px;
+  }
+
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 14px 26px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--brass);
+    color: var(--navy-deep);
+  }
+  .btn-primary:hover { background: #DA9A4C; }
+  .btn-primary:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid var(--navy-line-soft);
+  }
+  .btn-ghost:hover { border-color: var(--brass); color: var(--brass); }
+  .btn-ghost:focus-visible { outline: 3px solid var(--paper); outline-offset: 2px; }
+
+  /* ---------- TICKET (signature element) ---------- */
+  .ticket {
+    background: var(--paper);
+    color: var(--ink);
+    padding: 30px 28px 26px;
+    border-radius: 2px;
+    position: relative;
+    transform: rotate(1.4deg);
+    box-shadow: 0 24px 50px rgba(0,0,0,0.4);
+  }
+
+  .ticket::before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 14px;
+    background-image: radial-gradient(circle at 50% 0, var(--navy-deep) 5px, transparent 5.5px);
+    background-size: 20px 14px;
+    background-repeat: repeat-x;
+    background-position-x: 4px;
+  }
+
+  .ticket-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px dashed #B8AF97;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+
+  .ticket-head .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  .ticket-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+  }
+
+  .field { margin-bottom: 14px; }
+
+  .field label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    margin-bottom: 5px;
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    padding: 10px 11px;
+    border: 1px solid #C7BFA9;
+    border-radius: 2px;
+    background: #FBFAF6;
+    color: var(--ink);
+    resize: vertical;
+  }
+
+  .field input:focus-visible,
+  .field textarea:focus-visible {
+    outline: 2px solid var(--brass-dark);
+    outline-offset: 1px;
+  }
+
+  .ticket-submit {
+    width: 100%;
+    background: var(--navy-deep);
+    color: var(--paper);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 13px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .ticket-submit:hover { background: #1E2E52; }
+  .ticket-submit:focus-visible { outline: 3px solid var(--brass); outline-offset: 2px; }
+
+  .stamp {
+    position: absolute;
+    top: 26px;
+    right: 24px;
+    width: 74px;
+    height: 74px;
+    border: 3px solid var(--stamp-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--stamp-red);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transform: rotate(-14deg) scale(0);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+    pointer-events: none;
+    line-height: 1.15;
+  }
+  .stamp.show { transform: rotate(-14deg) scale(1); opacity: 0.9; }
+
+  .confirm-msg {
+    display: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #B8AF97;
+  }
+  .confirm-msg.show { display: block; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .section {
+    padding: 70px 0;
+    border-top: 1px solid var(--navy-line);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 10px;
+  }
+
+  .section h2 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin: 0 0 40px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+  }
+
+  .step {
+    border-left: 2px solid var(--navy-line-soft);
+    padding-left: 18px;
+  }
+
+  .step .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--brass);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .step h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .step p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--paper-dim);
+    margin: 0;
+  }
+
+  /* ---------- PROS STRIP ---------- */
+  .pros-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    background: rgba(44,69,112,0.28);
+    border: 1px solid var(--navy-line-soft);
+    border-radius: 3px;
+    padding: 24px 28px;
+  }
+
+  .pros-strip p {
+    margin: 0;
+    color: var(--paper-dim);
+    font-size: 0.92rem;
+    max-width: 46ch;
+    line-height: 1.5;
+  }
+
+  footer.wrap {
+    padding: 36px 24px 46px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--navy-line-soft);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .ticket { transform: rotate(0); }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="brand"><span class="brand-mark"></span>Dispatch</div>
+  <nav><a href="#pros">For Local Pros</a></nav>
+</header>
+
+<section class="hero wrap">
+  <div>
+    <div class="eyebrow">Local Home Services · Matched by Request</div>
+    <h1>Describe the job.<br>We <span>dispatch</span> the right pro.</h1>
+    <p class="lead">No categories to guess at. Tell us what's going on in your own words, and you'll hear back from a qualified local pro who actually does that kind of work.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#request">Submit a Job</a>
+      <a class="btn btn-ghost" href="#pros">I'm a Local Pro</a>
+    </div>
+  </div>
+
+  <div class="ticket" id="request">
+    <div class="stamp" id="stamp">Dispatched</div>
+    <div class="ticket-head">
+      <span class="ticket-title">Work Order</span>
+      <span class="num" id="ticket-num">#0000</span>
+    </div>
+    <form id="job-form">
+      <div class="field">
+        <label for="desc">What do you need done?</label>
+        <textarea id="desc" rows="3" placeholder="e.g. Kitchen faucet is leaking and the cabinet underneath is starting to warp." required></textarea>
+      </div>
+      <div class="field">
+        <label for="zip">ZIP code</label>
+        <input id="zip" type="text" inputmode="numeric" placeholder="31601" required>
+      </div>
+      <div class="field">
+        <label for="contact">Best way to reach you</label>
+        <input id="contact" type="text" placeholder="Phone or email" required>
+      </div>
+      <button class="ticket-submit" type="submit">Send Work Order</button>
+      <div class="confirm-msg" id="confirm">Logged. A dispatcher will match this to a nearby pro and reach out shortly.</div>
+    </form>
+  </div>
+</section>
+
+<section class="section wrap">
+  <div class="section-label">How It Works</div>
+  <h2>Three steps, no account required.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="tag">01 — Submit</div>
+      <h3>Describe the job</h3>
+      <p>Skip the category picker. Write what's actually happening — the more specific, the better the match.</p>
+    </div>
+    <div class="step">
+      <div class="tag">02 — Match</div>
+      <h3>We find who's right for it</h3>
+      <p>Your work order gets routed to a local pro whose trade and area fit what you described.</p>
+    </div>
+    <div class="step">
+      <div class="tag">03 — Connect</div>
+      <h3>They reach out to you</h3>
+      <p>No bidding war, no spam. One matched pro follows up to schedule the work.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" id="pros">
+  <div class="section-label">For Local Pros</div>
+  <h2>Get sent jobs that fit your trade.</h2>
+  <div class="pros-strip">
+    <p>We're onboarding a first group of local pros by hand — no fees until you've gotten real leads out of it. If you want in early, reach out directly.</p>
+    <a class="btn btn-primary" href="mailto:dispatch.forlocalpros@gmail.com?subject=Interested%20in%20getting%20leads">Get In Touch</a>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>Dispatch — local work, matched by request.</span>
+  <span id="year"></span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const ticketNum = Math.floor(1000 + Math.random() * 8999);
+  document.getElementById('ticket-num').textContent = '#' + ticketNum;
+
+  // 1. Go to formspree.io, create a free account, create a form.
+  // 2. Copy the endpoint it gives you (looks like https://formspree.io/f/xxxxabcd).
+  // 3. Paste it below in place of FORMSPREE_ENDPOINT.
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xzepyyvk';
+
+  document.getElementById('job-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const submitBtn = form.querySelector('.ticket-submit');
+    const confirmMsg = document.getElementById('confirm');
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    const data = {
+      job_description: document.getElementById('desc').value,
+      zip: document.getElementById('zip').value,
+      contact: document.getElementById('contact').value,
+      ticket_number: document.getElementById('ticket-num').textContent
+    };
+
+    fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(function(res) {
+        if (res.ok) {
+          document.getElementById('stamp').classList.add('show');
+          confirmMsg.textContent = 'Logged. A dispatcher will match this to a nearby pro and reach out shortly.';
+          confirmMsg.classList.add('show');
+          submitBtn.textContent = 'Sent';
+        } else {
+          throw new Error('Submission failed');
+        }
+      })
+      .catch(function() {
+        confirmMsg.textContent = "Something didn't go through — mind trying again in a moment?";
+        confirmMsg.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Work Order';
+      });
+  });
+</script>
+
+</body>
+</html>
